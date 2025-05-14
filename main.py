@@ -28,7 +28,7 @@ app.add_middleware(
 
 # Load the model
 try:
-    loaded_best_model = load_model("best_vgg_model.h5")
+    loaded_best_model = load_model("MobileNetV3Small_model.keras")
     print(f"Model loaded successfully from 'best_vgg_model.h5'")
 except Exception as e:
     print(f"Error loading model: {e}")
