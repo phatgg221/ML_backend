@@ -21,7 +21,7 @@ except Exception as e:
 #     img_array = np.array(image) / 255.0
 #     return np.expand_dims(img_array, axis=0)
 
-@app.get("/get")
+@app.get("/")
 def read_root():
     if loaded_best_model:
         return {"Hello": "World"}
