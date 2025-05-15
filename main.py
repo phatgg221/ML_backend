@@ -50,8 +50,8 @@ try:
     print("Age regression model loaded successfully")
     
     # Paddy variety classifier model (EfficientNet)
-    variety_model = load_model("efficientnetb0_paddy_classifier.keras")
-    print("Paddy variety classifier model loaded successfully")
+    # variety_model = load_model("efficientnetb0_paddy_classifier.keras")
+    # print("Paddy variety classifier model loaded successfully")
     
     models_loaded = True
 except Exception as e:
@@ -140,11 +140,11 @@ async def predict(req: ImageRequest):
         predicted_age = float(age_prediction[0][0])
         
         # Process for paddy variety classification (EfficientNet)
-        variety_input = preprocess_image(image_bytes, target_size=(64, 64))
-        variety_prediction = variety_model.predict(variety_input)
-        variety_class_index = np.argmax(variety_prediction[0])
-        variety_confidence = float(variety_prediction[0][variety_class_index])
-        variety_class_name = PADDY_VARIETIES[variety_class_index]
+        # variety_input = preprocess_image(image_bytes, target_size=(64, 64))
+        # variety_prediction = variety_model.predict(variety_input)
+        # variety_class_index = np.argmax(variety_prediction[0])
+        # variety_confidence = float(variety_prediction[0][variety_class_index])
+        # variety_class_name = PADDY_VARIETIES[variety_class_index]
         
         # Return combined results
         result = {
@@ -158,13 +158,13 @@ async def predict(req: ImageRequest):
             "age_regression": {
                 "predicted_age_days": predicted_age,
                 "estimated_planting_date": f"Approximately {int(predicted_age)} days old"
-            },
-            "variety_classification": {
-                "variety": variety_class_name,
-                "variety_index": int(variety_class_index),
-                "confidence": variety_confidence,
-                "description": get_variety_description(variety_class_name)
             }
+            # "variety_classification": {
+            #     "variety": variety_class_name,
+            #     "variety_index": int(variety_class_index),
+            #     "confidence": variety_confidence,
+            #     "description": get_variety_description(variety_class_name)
+            # }
         }
         
         return result
