@@ -13,10 +13,10 @@ from io import StringIO
 
 app = FastAPI()
 
-# CORS middleware to allow cross-origin requests
+
 origins = [
     "http://localhost:8080",
-    "https://image-result-seeker-site.vercel.app/",  # Add your actual frontend URL here
+    "https://image-result-seeker-site.vercel.app/",  
 ]
 
 app.add_middleware(
@@ -46,11 +46,11 @@ try:
     print("Disease classifier model loaded successfully")
     
     # Age regression model (MobileNetV3Small)
-    age_model = load_model("MobileNetV3Small_model.h5")
+    age_model = load_model("MobileNetV3Small_model.keras")
     print("Age regression model loaded successfully")
     
     # Paddy variety classifier model (EfficientNet)
-    variety_model = load_model("efficientnetb0_paddy_classification.keras")
+    variety_model = load_model("efficientnetb0_paddy_classifier.keras")
     print("Paddy variety classifier model loaded successfully")
     
     models_loaded = True
@@ -128,19 +128,19 @@ async def predict(req: ImageRequest):
                 image_bytes = await response.read()
         
         # Process for disease classification (VGG model)
-        disease_input = preprocess_image(image_bytes, target_size=(128, 128))
+        disease_input = preprocess_image(image_bytes, target_size=(64, 64))
         disease_prediction = disease_model.predict(disease_input)
         disease_class_index = np.argmax(disease_prediction[0])
         disease_confidence = float(disease_prediction[0][disease_class_index])
         disease_class_name = DISEASE_CLASSES[disease_class_index]
         
         # Process for age regression (MobileNetV3Small)
-        age_input = preprocess_image(image_bytes, target_size=(224, 224))
+        age_input = preprocess_image(image_bytes, target_size=(64, 64))
         age_prediction = age_model.predict(age_input)
         predicted_age = float(age_prediction[0][0])
         
         # Process for paddy variety classification (EfficientNet)
-        variety_input = preprocess_image(image_bytes, target_size=(224, 224))
+        variety_input = preprocess_image(image_bytes, target_size=(64, 64))
         variety_prediction = variety_model.predict(variety_input)
         variety_class_index = np.argmax(variety_prediction[0])
         variety_confidence = float(variety_prediction[0][variety_class_index])
