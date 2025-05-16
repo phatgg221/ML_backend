@@ -16,15 +16,16 @@ app = FastAPI()
 
 origins = [
     "http://localhost:8080",
-    "https://image-result-seeker-site.vercel.app/",  
+    "https://image-result-seeker-site.vercel.app/",
+    "http://54.66.75.164"  
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # Allow the listed origins
+    allow_origins=origins,  
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
-    allow_headers=["*"],  # Allow all headers
+    allow_methods=["*"],  
+    allow_headers=["*"],  
 )
 
 # Disease classes (from the image)
